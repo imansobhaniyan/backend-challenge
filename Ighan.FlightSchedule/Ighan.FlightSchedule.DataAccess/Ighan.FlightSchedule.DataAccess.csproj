@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Ighan.FlightSchedule.StorageModels\Ighan.FlightSchedule.StorageModels.csproj" />
+  </ItemGroup>
+
 </Project>
