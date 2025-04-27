@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Ighan.FlightSchedule.ConsoleDemo": {
+      "commandName": "Project",
+      "commandLineArgs": "2018-01-01 2018-01-15 1"
+    }
+  }
+}
