@@ -1,4 +1,5 @@
-﻿using Ighan.FlightSchedule.DataAccess;
+﻿using Ighan.FlightSchedule.ConsoleDemo.Infrastructure;
+using Ighan.FlightSchedule.DataAccess;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -15,13 +16,25 @@ public sealed class ReportService
 
     public async Task<string> GenerateReportAsync(DateTime startDate, DateTime endDate, int agencyId)
     {
+        var logger = TimeLogger.Start("Report");
+
         var crudeData = await GetCrudeDataAsync(startDate, endDate, agencyId);
+
+        logger.LogDurationAndReset("Read data in:");
 
         var dictionaryChainToSearchIn = GenerateDictionaryToSpeedupSearch(crudeData);
 
+        logger.LogDurationAndReset("Create directory in:");
+
         List<ResultDataModel> results = GenerateResults(startDate, endDate, crudeData, dictionaryChainToSearchIn);
 
+        logger.LogDurationAndReset("Generate report in:");
+
         string fileDir = await SaveToFileAsync(results);
+
+        logger.LogDurationAndReset("Report saved in:");
+
+        logger.Finish();
 
         return fileDir;
     }
@@ -142,7 +155,7 @@ public sealed class ReportService
 
         public override string ToString()
         {
-            return $"{FlightId},{OriginCityId},{DestinationCityId},{DepartureTime},{ArrivalTime},{AirlineId},{Status}";
+            return $"{FlightId},{OriginCityId},{DestinationCityId},{DepartureTime.ToString(DateTimeParser.DateTimeFormat)},{ArrivalTime.ToString(DateTimeParser.DateTimeFormat)},{AirlineId},{Status}";
         }
     }
 }

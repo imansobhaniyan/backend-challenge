@@ -3,6 +3,7 @@
 public static class DateTimeParser
 {
     public const string DateFormat = "yyyy-MM-dd";
+    public const string DateTimeFormat = "yyyy-MM-dd HH:mm:ss";
 
     public static bool TryParse(string? stringValue, out DateTime dateTime)
     {
